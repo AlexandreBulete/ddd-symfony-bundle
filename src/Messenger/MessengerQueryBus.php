@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Alexandrebulete\DddSymfonyBundle\Messenger;
+namespace AlexandreBulete\DddSymfonyBundle\Messenger;
 
-use Alexandrebulete\DddFoundation\Application\Query\QueryBusInterface;
-use Alexandrebulete\DddFoundation\Application\Query\QueryInterface;
+use AlexandreBulete\DddFoundation\Application\Query\QueryBusInterface;
+use AlexandreBulete\DddFoundation\Application\Query\QueryInterface;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;

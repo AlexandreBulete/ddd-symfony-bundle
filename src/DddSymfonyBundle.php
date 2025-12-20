@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Alexandrebulete\DddSymfonyBundle;
+namespace AlexandreBulete\DddSymfonyBundle;
 
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Alexandrebulete\DddFoundation\Application\Query\AsQueryHandler;
-use Alexandrebulete\DddFoundation\Application\Query\QueryInterface;
-use Alexandrebulete\DddFoundation\Application\Command\AsCommandHandler;
-use Alexandrebulete\DddFoundation\Application\Command\CommandInterface;
+use AlexandreBulete\DddFoundation\Application\Query\AsQueryHandler;
+use AlexandreBulete\DddFoundation\Application\Query\QueryInterface;
+use AlexandreBulete\DddFoundation\Application\Command\AsCommandHandler;
+use AlexandreBulete\DddFoundation\Application\Command\CommandInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 class DddSymfonyBundle extends AbstractBundle

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use Alexandrebulete\DddFoundation\Application\Command\CommandBusInterface;
-use Alexandrebulete\DddFoundation\Application\Query\QueryBusInterface;
-use Alexandrebulete\DddSymfonyBundle\Messenger\MessengerCommandBus;
-use Alexandrebulete\DddSymfonyBundle\Messenger\MessengerQueryBus;
+use AlexandreBulete\DddFoundation\Application\Command\CommandBusInterface;
+use AlexandreBulete\DddFoundation\Application\Query\QueryBusInterface;
+use AlexandreBulete\DddSymfonyBundle\Messenger\MessengerCommandBus;
+use AlexandreBulete\DddSymfonyBundle\Messenger\MessengerQueryBus;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;

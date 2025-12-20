@@ -15,7 +15,7 @@ Add the bundle to your `config/bundles.php`:
 ```php
 return [
     // ...
-    Alexandrebulete\DddSymfonyBundle\DddSymfonyBundle::class => ['all' => true],
+    AlexandreBulete\DddSymfonyBundle\DddSymfonyBundle::class => ['all' => true],
 ];
 ```
 
@@ -36,7 +36,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use Alexandrebulete\DddSymfonyBundle\DddKernel;
+use AlexandreBulete\DddSymfonyBundle\DddKernel;
 
 class Kernel extends DddKernel
 {
@@ -86,8 +86,8 @@ The bundle automatically configures two Symfony Messenger buses:
 Handlers decorated with `#[AsCommandHandler]` or `#[AsQueryHandler]` are automatically registered to their respective buses.
 
 ```php
-use Alexandrebulete\DddFoundation\Application\Command\AsCommandHandler;
-use Alexandrebulete\DddFoundation\Application\Command\CommandInterface;
+use AlexandreBulete\DddFoundation\Application\Command\AsCommandHandler;
+use AlexandreBulete\DddFoundation\Application\Command\CommandInterface;
 
 readonly class CreatePostCommand implements CommandInterface
 {
@@ -110,8 +110,8 @@ readonly class CreatePostHandler
 ### Using the Buses
 
 ```php
-use Alexandrebulete\DddFoundation\Application\Command\CommandBusInterface;
-use Alexandrebulete\DddFoundation\Application\Query\QueryBusInterface;
+use AlexandreBulete\DddFoundation\Application\Command\CommandBusInterface;
+use AlexandreBulete\DddFoundation\Application\Query\QueryBusInterface;
 
 class PostController
 {
@@ -169,7 +169,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use Alexandrebulete\DddSymfonyBundle\DddKernel;
+use AlexandreBulete\DddSymfonyBundle\DddKernel;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 class Kernel extends DddKernel

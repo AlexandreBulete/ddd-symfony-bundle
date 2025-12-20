@@ -18,12 +18,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Alexandrebulete\\DddSymfonyBundle\\": "src/"
+            "AlexandreBulete\\DddSymfonyBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Alexandrebulete\\DddSymfonyBundle\\Tests\\": "tests/"
+            "AlexandreBulete\\DddSymfonyBundle\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

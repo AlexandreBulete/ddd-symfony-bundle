@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alexandrebulete\DddSymfonyBundle;
+namespace AlexandreBulete\DddSymfonyBundle;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
