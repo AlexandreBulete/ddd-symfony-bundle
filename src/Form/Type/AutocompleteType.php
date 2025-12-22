@@ -23,7 +23,7 @@ final class AutocompleteType extends AbstractType
         $view->vars['placeholder'] = $options['placeholder'];
         $view->vars['min_length'] = $options['min_length'];
         $view->vars['limit'] = $options['limit'];
-        $view->vars['initial_text'] = $options['initial_text'];
+        $view->vars['initial_text'] = $options['initial_text'] ?? $form->getViewData();
     }
 
     public function configureOptions(OptionsResolver $resolver): void

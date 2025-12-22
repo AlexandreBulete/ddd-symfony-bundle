@@ -44,6 +44,12 @@ export default class extends Controller {
             searchField: ["text"],
             preload: false,
 
+            plugins: {
+                clear_button: {
+                    title: "Supprimer"
+                }
+            },
+
             load: async (query, callback) => {
                 const q = (query ?? "").trim();
                 const min = this.minLengthValue ?? 2;
