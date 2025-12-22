@@ -142,6 +142,76 @@ class PostController
 }
 ```
 
+### Autocomplete Form Field
+
+The bundle provides an **Autocomplete Symfony Form field** powered by **Stimulus + Tom Select** (no jQuery).
+
+It is designed for admin back-offices and DDD projects, and works with **ID-based values** (Value Objects friendly).
+
+---
+
+#### Assets setup (Importmap)
+
+If your application uses Importmap / AssetMapper:
+
+```bash
+php bin/console importmap:require tom-select
+php bin/console importmap:require tom-select/dist/css/tom-select.default.css
+```
+
+Enable the Stimulus controller in assets/controllers.json:
+
+```json
+
+{
+    "controllers": {
+        "@alexandrebulete/ddd-symfony-bundle": {
+            "autocomplete": {
+                "enabled": true,
+                "fetch": "eager",
+                "path": "@alexandrebulete/ddd-symfony-bundle/autocomplete_controller",
+                "autoimport": {
+                    "tom-select/dist/css/tom-select.default.css": true
+                }
+            }
+        }
+    }
+}
+```
+
+#### Usage
+
+```php
+use AlexandreBulete\DddSymfonyBundle\Form\Type\AutocompleteType;
+
+$builder->add('authorId', AutocompleteType::class, [
+    'label' => 'Author',
+    'remote_url' => $this->urlGenerator->generate('admin_user_autocomplete'),
+    'placeholder' => 'Search by email…',
+    'min_length' => 2,
+]);
+```
+The autocomplete endpoint must return:
+
+```json
+{
+  "results": [
+    { "id": "uuid-1", "text": "user@example.com" }
+  ]
+}
+```
+
+#### Options
+
+| Option | Description |
+|--------|-------------|
+| remote_url | AJAX endpoint URL |
+| placeholder | Input placeholder |
+| min_length | Minimum characters before search |
+| limit | Maximum results returned |
+| initial_text | Preselected label (edit forms) |
+<!-- | multiple | Whether the field is multiple | -->
+
 ## Customization
 
 ### Override Messenger Configuration
