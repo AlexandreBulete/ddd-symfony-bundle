@@ -17,14 +17,11 @@ class DddSymfonyBundle extends AbstractBundle
 {
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        // $container->import('../src/Resources/config/services.php');
-        // $container->import('../src/Resources/config/messenger.php');
-        $container->import(__DIR__.'/Resources/config/services.php');
+        $container->import($this->getPath().'/config/services.php');
     }
 
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        // Configurer le framework messenger via prepend
         $builder->prependExtensionConfig('framework', [
             'messenger' => [
                 'default_bus' => 'command.bus',
@@ -42,6 +39,14 @@ class DddSymfonyBundle extends AbstractBundle
                 'routing' => [
                     QueryInterface::class => 'sync',
                     CommandInterface::class => 'sync',
+                ],
+            ],
+        ]);
+
+        $builder->prependExtensionConfig('framework', [
+            'asset_mapper' => [
+                'paths' => [
+                    $this->getPath().'/assets/dist' => '@alexandrebulete/ddd-symfony-bundle',
                 ],
             ],
         ]);

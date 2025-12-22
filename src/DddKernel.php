@@ -23,6 +23,9 @@ abstract class DddKernel extends BaseKernel
         $container->import($projectDir.'/config/services.yaml');
         $container->import($projectDir.'/config/{services}_'.$this->environment.'.yaml');
 
+        // Auto-import packages services
+        $container->import(dirname(__DIR__) . '/config/packages/*.{php,yaml}');
+
         // Auto-import Bounded Contexts services & packages
         $container->import($projectDir.'/src/*/Infrastructure/Symfony/config/services.{php,yaml}');
         $container->import($projectDir.'/src/*/Infrastructure/Symfony/config/packages/*.{php,yaml}');
@@ -37,6 +40,6 @@ abstract class DddKernel extends BaseKernel
         $routes->import($projectDir.'/config/{routes}/*.{php,yaml}');
 
         // Auto-import Bounded Contexts routes
-        $routes->import($projectDir.'/src/*/Infrastructure/Symfony/routes/*.{php,yaml}');
+        $routes->import($projectDir.'/src/*/Infrastructure/Symfony/config/routes/*.{php,yaml}');
     }
 }

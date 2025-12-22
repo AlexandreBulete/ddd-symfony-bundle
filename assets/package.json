@@ -1,0 +1,33 @@
+{
+    "name": "@alexandrebulete/ddd-symfony-bundle",
+    "description": "DDD Symfony bundle helpers (Stimulus controllers + Twig fields)",
+    "license": "MIT",
+    "version": "0.0.0-dev",
+    "type": "module",
+    "files": [
+        "dist"
+    ],
+    "main": "dist/autocomplete_controller.js",
+    "symfony": {
+        "controllers": {
+            "autocomplete": {
+                "main": "dist/autocomplete_controller.js",
+                "webpackMode": "eager",
+                "fetch": "eager",
+                "enabled": true,
+                "autoimport": {
+                    "tom-select/dist/css/tom-select.default.css": true
+                }
+            }
+        },
+        "importmap": {
+            "@hotwired/stimulus": "^3.0.0",
+            "tom-select": "^2.2.2",
+            "tom-select/dist/css/tom-select.default.css": "^2.2.2"
+        }
+    },
+    "peerDependencies": {
+        "@hotwired/stimulus": "^3.0.0",
+        "tom-select": "^2.2.2"
+    }
+}

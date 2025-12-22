@@ -1,0 +1,29 @@
+{% block ddd_symfony_autocomplete_row %}
+	<div class="mb-3 field">
+		{{ form_label(form) }}
+
+		<div
+			data-controller="alexandrebulete--ddd-symfony-bundle--autocomplete" 
+            data-alexandrebulete--ddd-symfony-bundle--autocomplete-url-value="{{ form.vars.remote_url }}" 
+            data-alexandrebulete--ddd-symfony-bundle--autocomplete-placeholder-value="{{ form.vars.placeholder }}" 
+            data-alexandrebulete--ddd-symfony-bundle--autocomplete-min-length-value="{{ form.vars.min_length }}" 
+            data-alexandrebulete--ddd-symfony-bundle--autocomplete-limit-value="{{ form.vars.limit }}" 
+            data-alexandrebulete--ddd-symfony-bundle--autocomplete-initial-text-value="{{ form.vars.initial_text ?? '' }}">
+			{{ form_widget(form) }}
+
+			<select class="form-select" 
+                data-alexandrebulete--ddd-symfony-bundle--autocomplete-target="select" {% if form.vars.required %} 
+                required {% endif %}
+            >
+				{% if form.vars.value and (form.vars.initial_text ?? null) %}
+					<option value="{{ form.vars.value }}" selected="selected">
+						{{ form.vars.initial_text ?? form.vars.value ?? '' }}
+					</option>
+				{% endif %}
+			</select>
+		</div>
+
+		{{ form_help(form) }}
+		{{ form_errors(form) }}
+	</div>
+{% endblock %}
