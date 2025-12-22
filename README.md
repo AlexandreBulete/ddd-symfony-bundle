@@ -148,8 +148,6 @@ The bundle provides an **Autocomplete Symfony Form field** powered by **Stimulus
 
 It is designed for admin back-offices and DDD projects, and works with **ID-based values** (Value Objects friendly).
 
----
-
 #### Assets setup (Importmap)
 
 If your application uses Importmap / AssetMapper:
