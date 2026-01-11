@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "alexandrebulete/ddd-foundation": "^1.0",
+        "alexandrebulete/ddd-foundation": "^1.1",
         "symfony/framework-bundle": "^7.0",
         "symfony/messenger": "^7.0",
         "symfony/dependency-injection": "^7.0",

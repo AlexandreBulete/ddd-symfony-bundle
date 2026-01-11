@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use AlexandreBulete\DddFoundation\Application\Command\CommandBusInterface;
+use AlexandreBulete\DddFoundation\Application\Event\EventDispatcherInterface;
 use AlexandreBulete\DddFoundation\Application\Query\QueryBusInterface;
+use AlexandreBulete\DddSymfonyBundle\Event\SymfonyEventDispatcher;
 use AlexandreBulete\DddSymfonyBundle\Messenger\MessengerCommandBus;
 use AlexandreBulete\DddSymfonyBundle\Messenger\MessengerQueryBus;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -24,5 +26,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MessengerQueryBus::class)
         ->args([service('query.bus')])
         ->alias(QueryBusInterface::class, MessengerQueryBus::class);
+
+    $services->set(SymfonyEventDispatcher::class)
+        ->alias(EventDispatcherInterface::class, SymfonyEventDispatcher::class);
 };
 
