@@ -15,7 +15,6 @@ export default class extends Controller {
     connect() {
         const hiddenInput = this.element.querySelector('input[type="hidden"], input');
         const selectEl = this.selectTarget;
-        console.log(this);
 
         if (!hiddenInput) {
             console.warn("[autocomplete] hidden input not found");
