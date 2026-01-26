@@ -24,6 +24,9 @@ final class AutocompleteType extends AbstractType
         $view->vars['min_length'] = $options['min_length'];
         $view->vars['limit'] = $options['limit'];
         $view->vars['initial_text'] = $options['initial_text'] ?? $form->getViewData();
+        $view->vars['initial_icon'] = $options['initial_icon'];
+        $view->vars['initial_icon_width'] = $options['initial_icon_width'];
+        $view->vars['initial_icon_height'] = $options['initial_icon_height'];
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -34,6 +37,9 @@ final class AutocompleteType extends AbstractType
             'min_length' => 2,
             'limit' => 20,
             'initial_text' => null,
+            'initial_icon' => null,
+            'initial_icon_width' => 20,
+            'initial_icon_height' => 20,
         ]);
 
         $resolver->setAllowedTypes('remote_url', ['string']);
@@ -41,6 +47,9 @@ final class AutocompleteType extends AbstractType
         $resolver->setAllowedTypes('min_length', ['int']);
         $resolver->setAllowedTypes('limit', ['int']);
         $resolver->setAllowedTypes('initial_text', ['null', 'string']);
+        $resolver->setAllowedTypes('initial_icon', ['null', 'string']);
+        $resolver->setAllowedTypes('initial_icon_width', ['int']);
+        $resolver->setAllowedTypes('initial_icon_height', ['int']);
     }
 
     public function getBlockPrefix(): string

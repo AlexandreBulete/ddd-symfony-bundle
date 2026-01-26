@@ -10,6 +10,9 @@ export default class extends Controller {
         minLength: Number,
         limit: Number,
         initialText: String,
+        initialIcon: String,
+        initialIconWidth: Number,
+        initialIconHeight: Number,
     };
 
     connect() {
@@ -28,10 +31,13 @@ export default class extends Controller {
         //     selectEl.appendChild(opt);
         // }
 
-        if (hiddenInput.value && this.initialTextValue) {
-            const opt = new Option(this.initialTextValue, hiddenInput.value, true, true);
-            selectEl.appendChild(opt);
-        }
+        const initialData = hiddenInput.value && this.initialTextValue ? {
+            id: hiddenInput.value,
+            text: this.initialTextValue,
+            icon: this.initialIconValue || null,
+            width: this.initialIconWidthValue || 20,
+            height: this.initialIconHeightValue || 20,
+        } : null;
 
         this.tom = new TomSelect(selectEl, {
             create: false,
@@ -81,13 +87,36 @@ export default class extends Controller {
                 }
             },
 
+            render: {
+                option: (item) => {
+                    let optionImg = item.icon ? `<img 
+                        src="${item.icon}" 
+                        alt="${item.text}" 
+                        class="autocomplete-option-img" 
+                        style="max-width: ${item.width ?? 20}px; max-height: ${item.height ?? 20}px; margin-right: 5px;"
+                    />` : "";
+                    return `<div>${optionImg} ${item.text}</div>`;
+                },
+                item: (item) => {
+                    let itemImg = item.icon ? `<img 
+                        src="${item.icon}" 
+                        alt="${item.text}" 
+                        class="autocomplete-option-img" 
+                        style="max-width: ${item.width ?? 20}px; max-height: ${item.height ?? 20}px; margin-right: 5px;"
+                    />` : "";
+                    return `<div>${itemImg} ${item.text}</div>`;
+                },
+            },
+
             onChange: (value) => {
                 hiddenInput.value = value || "";
             },
         });
 
-        if (hiddenInput.value) {
-            this.tom.setValue(hiddenInput.value, true);
+        if (initialData) {
+            this.tom.addOption(initialData);
+            this.tom.addItem(initialData.id, true);
+            this.tom.refreshItems();
         }
     }
 

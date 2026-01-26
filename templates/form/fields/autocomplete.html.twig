@@ -8,19 +8,16 @@
             data-alexandrebulete--ddd-symfony-bundle--autocomplete-placeholder-value="{{ form.vars.placeholder }}" 
             data-alexandrebulete--ddd-symfony-bundle--autocomplete-min-length-value="{{ form.vars.min_length }}" 
             data-alexandrebulete--ddd-symfony-bundle--autocomplete-limit-value="{{ form.vars.limit }}" 
-            data-alexandrebulete--ddd-symfony-bundle--autocomplete-initial-text-value="{{ form.vars.initial_text ?? '' }}">
+            data-alexandrebulete--ddd-symfony-bundle--autocomplete-initial-text-value="{{ form.vars.initial_text ?? '' }}"
+            {% if form.vars.initial_icon %}data-alexandrebulete--ddd-symfony-bundle--autocomplete-initial-icon-value="{{ form.vars.initial_icon }}"{% endif %}
+            data-alexandrebulete--ddd-symfony-bundle--autocomplete-initial-icon-width-value="{{ form.vars.initial_icon_width }}"
+            data-alexandrebulete--ddd-symfony-bundle--autocomplete-initial-icon-height-value="{{ form.vars.initial_icon_height }}">
 			{{ form_widget(form) }}
 
 			<select class="form-select" 
                 data-alexandrebulete--ddd-symfony-bundle--autocomplete-target="select" {% if form.vars.required %} 
                 required {% endif %}
-            >
-				{% if form.vars.value and (form.vars.initial_text ?? null) %}
-					<option value="{{ form.vars.value }}" selected="selected">
-						{{ form.vars.initial_text ?? form.vars.value ?? '' }}
-					</option>
-				{% endif %}
-			</select>
+            ></select>
 		</div>
 
 		{{ form_help(form) }}
