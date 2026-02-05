@@ -1,3 +1,16 @@
+## [1.1.1] - 2026-02-05
+
+### 🚀 Features
+
+- Add select option icon
+
+### 💼 Other
+
+- Symfony 8 compatibility
+
+### 📚 Documentation
+
+- Update CHANGELOG.md for 1.1.0
 ## [1.1.0] - 2026-01-11
 
 ### 🐛 Bug Fixes
