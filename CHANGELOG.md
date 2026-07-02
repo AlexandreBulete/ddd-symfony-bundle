@@ -1,3 +1,17 @@
+## [1.1.3] - 2026-07-02
+
+### 🚀 Features
+
+- Markdown and image_preview sylius fields
+## [1.1.2] - 2026-07-02
+
+### 🚀 Features
+
+- Abstract security to use for custom BC Domain.
+
+### 📚 Documentation
+
+- Update CHANGELOG.md for 1.1.1
 ## [1.1.1] - 2026-02-05
 
 ### 🚀 Features
