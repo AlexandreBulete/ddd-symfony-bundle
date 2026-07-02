@@ -1,0 +1,7 @@
+.milkdown .ProseMirror {
+    padding: 20px 80px;
+}
+
+.milkdown .milkdown-table-block .cell-handle .button-group button {
+    width: 30px;
+}

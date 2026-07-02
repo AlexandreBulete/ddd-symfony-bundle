@@ -1,0 +1,11 @@
+{
+    "dependencies": {
+        "@milkdown/crepe": "^7.17.3"
+    },
+    "devDependencies": {
+        "esbuild": "^0.27.2"
+    },
+    "scripts": {
+        "build:milkdown": "esbuild assets/milkdown/editor.entry.js --bundle --format=esm --splitting=false --outdir=public/build/milkdown --entry-names=milkdown-editor --asset-names=milkdown-[name] --loader:.css=css --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.eot=file --loader:.svg=file"
+    }
+}

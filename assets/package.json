@@ -13,11 +13,17 @@
             "autocomplete": {
                 "main": "dist/autocomplete_controller.js",
                 "webpackMode": "eager",
-                "fetch": "eager",
+                "fetch": "lazy",
                 "enabled": true,
                 "autoimport": {
                     "tom-select/dist/css/tom-select.default.css": true
                 }
+            },
+            "markdown": {
+                "main": "dist/markdown_controller.js",
+                "webpackMode": "eager",
+                "fetch": "lazy",
+                "enabled": true
             }
         },
         "importmap": {

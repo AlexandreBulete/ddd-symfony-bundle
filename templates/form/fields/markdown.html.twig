@@ -1,0 +1,25 @@
+{% block ddd_symfony_markdown_row %}
+	<div class="mb-3 field">
+		{{ form_label(form) }}
+
+		<div data-controller="alexandrebulete--ddd-symfony-bundle--markdown">
+            
+            <div 
+                data-alexandrebulete--ddd-symfony-bundle--markdown-target="editor"
+                class="form-control"
+            ></div>
+			
+            {{ form_widget(form, {
+                'attr': {
+                    'data-alexandrebulete--ddd-symfony-bundle--markdown-target': 'textarea',
+                    'class': 'd-none',
+                },
+                'required': form.vars.required,
+            }) }}
+
+		</div>
+
+		{{ form_help(form) }}
+		{{ form_errors(form) }}
+	</div>
+{% endblock %}

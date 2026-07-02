@@ -18,8 +18,8 @@ abstract class DddKernel extends BaseKernel
         $projectDir = $this->getProjectDir();
 
         // Standard Symfony imports
-        $container->import($projectDir.'/config/{packages}/*.{php,yaml}');
-        $container->import($projectDir.'/config/{packages}/'.$this->environment.'/*.{php,yaml}');
+        $container->import($projectDir.'/config/{packages,twig_hooks}/*.{php,yaml}');
+        $container->import($projectDir.'/config/{packages,twig_hooks}/'.$this->environment.'/*.{php,yaml}');
         $container->import($projectDir.'/config/services.yaml');
         $container->import($projectDir.'/config/{services}_'.$this->environment.'.yaml');
 
