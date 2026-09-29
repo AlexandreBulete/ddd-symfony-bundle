@@ -1,1 +1,9 @@
 /node_modules
+/vendor/
+/composer.lock
+/.phpunit.cache/
+/phpunit.xml
+/phpstan.neon
+/.pkg-qa.json
+/.pkg-qa.lock
+/var/

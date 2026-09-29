@@ -32,7 +32,8 @@ final class MessengerCommandBus implements CommandBusInterface
             /** @var T */
             return $this->handle($command);
         } catch (HandlerFailedException $e) {
-            if ($exception = current($e->getWrappedExceptions())) {
+            $exception = current($e->getWrappedExceptions());
+            if ($exception !== false) {
                 throw $exception;
             }
 
