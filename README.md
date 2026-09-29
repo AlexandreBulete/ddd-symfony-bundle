@@ -241,7 +241,10 @@ $trace->stamp->correlationId;         // the whole chain
 
 A security user tells which account it is by implementing
 `ActorAwareInterface` (`SecurityUser` accepts an `Actor`); otherwise its
-identifier is used. Symfony Security is optional: without it, the system is
+identifier is used. An actor may also name the **credential** it came with —
+an API token's id, never the token — so that everything one token did can be
+found: `Actor::agent($id, $name, $tokenId)`. Actors serialized before that
+field existed are still read. Symfony Security is optional: without it, the system is
 the actor of every chain.
 
 Stamps are set by a decorator of each bus, at dispatch time: it is the only
