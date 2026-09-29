@@ -7,5 +7,16 @@
     },
     "scripts": {
         "build:milkdown": "esbuild assets/milkdown/editor.entry.js --bundle --format=esm --splitting=false --outdir=public/build/milkdown --entry-names=milkdown-editor --asset-names=milkdown-[name] --loader:.css=css --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.eot=file --loader:.svg=file"
+    },
+    "overrides": {
+        "@milkdown/components": {
+            "nanoid": "5.1.16"
+        },
+        "@milkdown/utils": {
+            "nanoid": "5.1.16"
+        },
+        "postcss": {
+            "nanoid": "5.1.16"
+        }
     }
 }
