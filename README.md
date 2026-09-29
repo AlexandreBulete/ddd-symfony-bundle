@@ -210,6 +210,55 @@ The autocomplete endpoint must return:
 | initial_text | Preselected label (edit forms) |
 <!-- | multiple | Whether the field is multiple | -->
 
+## Tracing: who acts, and what caused what
+
+Every message on `command.bus` and `query.bus` carries two stamps, set when it
+is dispatched:
+
+- `ActorStamp` — who asks: a `user`, an `agent`, or the `system`;
+- `TraceStamp` — its place in a chain of causes: its own `messageId`, the
+  `correlationId` of the whole chain, the `causationId` of the message that
+  sent it, and the `channel` the chain entered through (`http`, `cli`, …).
+
+Who acts is decided once, at the entry point:
+
+| Situation | Actor |
+|---|---|
+| A signed-in user dispatches (back office, API) | that user |
+| A message is sent while another is handled | `system`, same chain |
+| `TraceContext::runAs($actor, $channel, fn)` (agent runtime, webhook) | `$actor` |
+| An explicit `ActorStamp` | that actor |
+| A message consumed from a transport | what it was sent with |
+| CLI, cron, nobody signed in | `system` |
+
+Read the current trace from anywhere — an audit writer, a logger:
+
+```php
+$trace = $traceContext->current();   // ?Trace
+$trace->actor->label;                 // "Pauline Martin"
+$trace->stamp->correlationId;         // the whole chain
+```
+
+A security user tells which account it is by implementing
+`ActorAwareInterface` (`SecurityUser` accepts an `Actor`); otherwise its
+identifier is used. Symfony Security is optional: without it, the system is
+the actor of every chain.
+
+Stamps are set by a decorator of each bus, at dispatch time: it is the only
+moment a message sent with `DispatchAfterCurrentBusStamp` still knows its
+cause. A bus of your own gets the same behaviour by adding
+`ddd.messenger.tracing_middleware`, minus that deferred case.
+
+## Development
+
+```bash
+composer install
+composer qa     # phpstan (max + strict rules), then phpunit
+```
+
+The integration test boots a kernel with Framework and Doctrine only — no
+Security, no AssetMapper: the minimum the bundle must work with.
+
 ## Customization
 
 ### Override Messenger Configuration

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AlexandreBulete\DddSymfonyBundle;
 
+use Symfony\Component\AssetMapper\AssetMapper;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,6 +16,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 class DddSymfonyBundle extends AbstractBundle
 {
+    /**
+     * @param array<mixed> $config
+     */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $container->import($this->getPath().'/config/services.php');
@@ -26,12 +30,19 @@ class DddSymfonyBundle extends AbstractBundle
             'messenger' => [
                 'default_bus' => 'command.bus',
                 'buses' => [
+                    // Tracing first: the transaction, and anything that reads
+                    // the current trace inside it, already know who acts.
                     'command.bus' => [
                         'middleware' => [
+                            'ddd.messenger.tracing_middleware',
                             'messenger.middleware.doctrine_transaction',
                         ],
                     ],
-                    'query.bus' => [],
+                    'query.bus' => [
+                        'middleware' => [
+                            'ddd.messenger.tracing_middleware',
+                        ],
+                    ],
                 ],
                 'transports' => [
                     'sync' => 'sync://',
@@ -42,6 +53,12 @@ class DddSymfonyBundle extends AbstractBundle
                 ],
             ],
         ]);
+
+        // Declaring asset_mapper paths enables AssetMapper: only when the
+        // component is installed, or a project without it cannot boot.
+        if (!class_exists(AssetMapper::class)) {
+            return;
+        }
 
         $builder->prependExtensionConfig('framework', [
             'asset_mapper' => [

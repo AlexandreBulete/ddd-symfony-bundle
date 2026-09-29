@@ -10,12 +10,13 @@
     ],
     "require": {
         "php": "^8.2",
-        "alexandrebulete/ddd-foundation": "^1.1",
+        "alexandrebulete/ddd-foundation": "^1.2",
         "symfony/framework-bundle": "^7.0 || ^8.0",
         "symfony/messenger": "^7.0 || ^8.0",
         "symfony/dependency-injection": "^7.0 || ^8.0",
         "symfony/config": "^7.0 || ^8.0",
-        "symfony/security-core": "^7.0 || ^8.0"
+        "symfony/security-core": "^7.0 || ^8.0",
+        "symfony/uid": "^7.0 || ^8.0"
     },
     "autoload": {
         "psr-4": {
@@ -28,6 +29,25 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "require-dev": {
+        "doctrine/doctrine-bundle": "^2.13 || ^3.0",
+        "doctrine/orm": "^3.3",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^11.5 || ^12.0 || ^13.0",
+        "symfony/form": "^7.0 || ^8.0",
+        "symfony/security-bundle": "^7.0 || ^8.0"
+    },
+    "suggest": {
+        "symfony/form": "For the AutocompleteType and MarkdownType form types"
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse --no-progress",
+        "test": "phpunit",
+        "qa": [
+            "@phpstan",
+            "@test"
+        ]
+    }
 }
-
