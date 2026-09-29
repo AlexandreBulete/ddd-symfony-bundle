@@ -1,3 +1,12 @@
+## [1.5.0] - 2026-09-29
+
+### 🚀 Features
+
+- The credential an actor used
+
+### 📚 Documentation
+
+- Update CHANGELOG.md for 1.4.0
 ## [1.4.0] - 2026-09-29
 
 ### 📚 Documentation
