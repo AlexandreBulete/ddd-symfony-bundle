@@ -7,6 +7,7 @@ use AlexandreBulete\DddFoundation\Application\Event\EventDispatcherInterface;
 use AlexandreBulete\DddFoundation\Application\Query\QueryBusInterface;
 use AlexandreBulete\DddSymfonyBundle\Event\SymfonyEventDispatcher;
 use AlexandreBulete\DddSymfonyBundle\Messenger\MessengerCommandBus;
+use AlexandreBulete\DddSymfonyBundle\Messenger\Authorization\PermissionRegistry;
 use AlexandreBulete\DddSymfonyBundle\Messenger\MessengerQueryBus;
 use AlexandreBulete\DddSymfonyBundle\Messenger\Tracing\ActorResolverInterface;
 use AlexandreBulete\DddSymfonyBundle\Messenger\Tracing\SecurityActorResolver;
@@ -17,6 +18,7 @@ use AlexandreBulete\DddSymfonyBundle\Messenger\Tracing\TracingMiddleware;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -58,5 +60,11 @@ return static function (ContainerConfigurator $container): void {
 
     // Referenced by id in the bus middleware lists (DddSymfonyBundle::prependExtension()).
     $services->set('ddd.messenger.tracing_middleware', TracingMiddleware::class);
+
+    // ── Authorization (ADR 0008) ─────────────────────────────────────────────
+    // Filled by PermissionDiscoveryPass; public for role screens and tooling.
+    $services->set(PermissionRegistry::class)
+        ->args([[], tagged_iterator('ddd.permission_provider')])
+        ->public();
 };
 

@@ -6,7 +6,11 @@ namespace AlexandreBulete\DddSymfonyBundle;
 
 use Symfony\Component\AssetMapper\AssetMapper;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+use AlexandreBulete\DddSymfonyBundle\DependencyInjection\AuthorizationMiddlewarePass;
+use AlexandreBulete\DddSymfonyBundle\DependencyInjection\PermissionDiscoveryPass;
+use AlexandreBulete\DddSymfonyBundle\Messenger\Authorization\PermissionProviderInterface;
 use Symfony\Component\DependencyInjection\ChildDefinition;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use AlexandreBulete\DddFoundation\Application\Query\AsQueryHandler;
 use AlexandreBulete\DddFoundation\Application\Query\QueryInterface;
@@ -86,6 +90,15 @@ class DddSymfonyBundle extends AbstractBundle
                 $definition->addTag('messenger.message_handler', ['bus' => 'command.bus']);
             }
         );
+
+        $container->registerForAutoconfiguration(PermissionProviderInterface::class)
+            ->addTag('ddd.permission_provider');
+
+        // Both before Messenger's pass (priority 0), which builds the buses.
+        // Authorization after the activity journal's (10): closer to the
+        // handling, so a refusal is journaled on its way out.
+        $container->addCompilerPass(new PermissionDiscoveryPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 5);
+        $container->addCompilerPass(new AuthorizationMiddlewarePass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 5);
     }
 }
 

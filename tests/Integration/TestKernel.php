@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Kernel;
  * The bundle as a project installs it — without Security, without IAM: the
  * minimum it must work with.
  */
-final class TestKernel extends Kernel
+class TestKernel extends Kernel
 {
     use MicroKernelTrait;
 
@@ -35,12 +35,19 @@ final class TestKernel extends Kernel
 
     public function getCacheDir(): string
     {
-        return sys_get_temp_dir() . '/ddd-symfony-bundle-tests/cache';
+        return sys_get_temp_dir() . '/ddd-symfony-bundle-tests/cache/' . (new \ReflectionClass($this))->getShortName();
     }
 
     public function getLogDir(): string
     {
         return sys_get_temp_dir() . '/ddd-symfony-bundle-tests/log';
+    }
+
+    /**
+     * No permission checker by default: authorization stays off.
+     */
+    protected function configureAuthorization(ContainerConfigurator $container): void
+    {
     }
 
     protected function configureContainer(ContainerConfigurator $container): void
@@ -64,5 +71,7 @@ final class TestKernel extends Kernel
         // The buses as an application gets them, kept public for the test.
         $services->alias('test.command_bus', CommandBusInterface::class)->public();
         $services->alias('test.query_bus', QueryBusInterface::class)->public();
+
+        $this->configureAuthorization($container);
     }
 }

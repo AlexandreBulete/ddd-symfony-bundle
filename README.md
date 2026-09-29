@@ -249,6 +249,35 @@ moment a message sent with `DispatchAfterCurrentBusStamp` still knows its
 cause. A bus of your own gets the same behaviour by adding
 `ddd.messenger.tracing_middleware`, minus that deferred case.
 
+## Authorization: one permission per use case
+
+Every command and query is a permission, discovered from its handler when the
+container is built — nothing to declare:
+
+```
+App\Client\Application\Query\FindClients\FindClientsQuery  →  client.find_clients
+```
+
+`#[Permission('client.read')]` (from ddd-foundation) on a message keeps the id
+stable across a rename, or groups several use cases under one permission.
+`PermissionRegistry` lists them all (a role screen reads it);
+`PermissionProviderInterface` adds those no message carries
+(`backoffice.access`, checked by the firewall).
+
+Enforcement is opt-in: it turns on when a `PermissionCheckerInterface` exists —
+an IAM provides one (ddd-iam-bundle). Then:
+
+- a middleware, right before the handling, refuses a command or query its
+  actor has no permission for (`PermissionDenied`, an `AccessDeniedException`:
+  403 over HTTP); the system actor is not checked; an async message is checked
+  again in the worker;
+- the build fails if a use case has no usable permission (outside the
+  `<Context>\Application\…` convention without `#[Permission]`, or two
+  messages deriving the same id by accident) — none can escape silently.
+
+Without a checker, nothing is enforced and nothing is required: an application
+that does not use authorization is not asked to comply.
+
 ## Development
 
 ```bash
