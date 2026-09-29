@@ -1,3 +1,16 @@
+## [1.2.0] - 2026-09-29
+
+### 🚀 Features
+
+- Actor and trace stamps on every message
+
+### 📚 Documentation
+
+- Update CHANGELOG.md for 1.1.3
+
+### ⚙️ Miscellaneous Tasks
+
+- Phpstan max level, tests and ci
 ## [1.1.3] - 2026-07-02
 
 ### 🚀 Features
@@ -18,26 +31,26 @@
 
 - Add select option icon
 
-### 💼 Other
-
-- Symfony 8 compatibility
-
 ### 📚 Documentation
 
 - Update CHANGELOG.md for 1.1.0
+
+### 💼 Other
+
+- Symfony 8 compatibility
 ## [1.1.0] - 2026-01-11
 
 ### 🐛 Bug Fixes
 
 - Rm console.log and ignore node_modules
 
-### 💼 Other
-
-- Implement new ddd-foundation RecordEvents
-
 ### 📚 Documentation
 
 - Update CHANGELOG.md for 1.0.0
+
+### 💼 Other
+
+- Implement new ddd-foundation RecordEvents
 ## [1.0.0] - 2025-12-22
 
 ### 🚀 Features
