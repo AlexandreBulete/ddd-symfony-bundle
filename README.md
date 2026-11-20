@@ -281,6 +281,22 @@ an IAM provides one (ddd-iam-bundle). Then:
 Without a checker, nothing is enforced and nothing is required: an application
 that does not use authorization is not asked to comply.
 
+### Public use cases
+
+`#[PublicAccess]` (from ddd-foundation) opens a use case to anyone, signed in
+or not — what a public site reads, a contact form:
+
+```php
+#[PublicAccess]
+final readonly class FindPublishedPostsQuery implements QueryInterface { … }
+```
+
+It is no permission: no role grants it, `PermissionRegistry::all()` does not
+list it (`isPublic()` tells), and the middleware lets any actor run it. Without
+it, a back-office user lacking the permission would be refused on the public
+site where an anonymous visitor passes. Declaring both `#[PublicAccess]` and
+`#[Permission]` fails the build.
+
 ## Development
 
 ```bash

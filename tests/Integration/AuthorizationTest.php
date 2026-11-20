@@ -42,6 +42,19 @@ final class AuthorizationTest extends KernelTestCase
     }
 
     #[Test]
+    public function a_public_use_case_is_open_to_any_user_and_is_no_permission(): void
+    {
+        $user = Actor::user('u-1', 'Pauline');
+
+        self::assertSame('open to all', $this->as($user, fn () => $this->queries()->ask(new ReadPublicNotice())));
+
+        $registry = self::getContainer()->get(PermissionRegistry::class);
+        self::assertInstanceOf(PermissionRegistry::class, $registry);
+        self::assertTrue($registry->isPublic(ReadPublicNotice::class));
+        self::assertNotContains('test.read_public_notice', $registry->all());
+    }
+
+    #[Test]
     public function the_system_and_what_it_triggers_are_not_checked(): void
     {
         // RecordTrace is refused to everyone, and sends NotifyLater: both run

@@ -17,7 +17,8 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
  * Right before the handling (AuthorizationMiddlewarePass), so it runs where a
  * message is handled: an async message is checked again in the worker —
  * rights withdrawn in between apply. The system is not checked: it is code
- * (a reaction, a cron), not someone asking.
+ * (a reaction, a cron), not someone asking. Nor is a use case open to anyone
+ * (#[PublicAccess]): a signed-in user reads the public site like a visitor.
  */
 final readonly class AuthorizationMiddleware implements MiddlewareInterface
 {
@@ -34,7 +35,7 @@ final readonly class AuthorizationMiddleware implements MiddlewareInterface
         }
 
         $actor = Tracer::traceOf($envelope)->actor;
-        if ($actor->isSystem()) {
+        if ($actor->isSystem() || $this->permissions->isPublic($message::class)) {
             return $stack->next()->handle($envelope, $stack);
         }
 

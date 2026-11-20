@@ -65,6 +65,7 @@ class TestKernel extends Kernel
         $services = $container->services();
         $services->set(RecordTraceHandler::class)->autowire()->autoconfigure();
         $services->set(FindTraceHandler::class)->autowire()->autoconfigure();
+        $services->set(ReadPublicNoticeHandler::class)->autowire()->autoconfigure();
         $services->set(NotifyLaterHandler::class)->autowire()->autoconfigure();
         $services->set(TraceProbe::class)->public();
 

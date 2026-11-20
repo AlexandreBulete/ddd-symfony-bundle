@@ -23,6 +23,9 @@ use Symfony\Component\DependencyInjection\Exception\LogicException;
  * or when two messages derive the same one by accident. Without a checker,
  * nothing is enforced, and the registry simply leaves such messages out: an
  * application that does not use authorization is not asked to comply.
+ *
+ * A use case marked #[PublicAccess] is no permission: it is listed apart, and
+ * the middleware lets anyone run it.
  */
 final class PermissionDiscoveryPass implements CompilerPassInterface
 {
@@ -35,6 +38,7 @@ final class PermissionDiscoveryPass implements CompilerPassInterface
         }
 
         $permissions = [];
+        $public = [];
         $problems = [];
 
         foreach ($container->findTaggedServiceIds('messenger.message_handler') as $id => $tags) {
@@ -53,6 +57,13 @@ final class PermissionDiscoveryPass implements CompilerPassInterface
                         continue;
                     }
 
+                    if (PermissionName::isPublic($messageClass)) {
+                        if (PermissionName::isDeclared($messageClass)) {
+                            $problems[] = sprintf('%s: both #[PublicAccess] and #[Permission] — a use case is open or guarded, not both.', $messageClass);
+                        }
+                        $public[] = $messageClass;
+                        continue;
+                    }
                     $permission = PermissionName::of($messageClass);
                     if ($permission === null) {
                         $problems[] = sprintf('%s: outside the <Context>\Application\… convention — declare #[Permission].', $messageClass);
@@ -80,7 +91,11 @@ final class PermissionDiscoveryPass implements CompilerPassInterface
         }
 
         ksort($permissions);
-        $container->getDefinition(PermissionRegistry::class)->replaceArgument(0, $permissions);
+        $public = array_values(array_unique($public));
+        sort($public);
+        $container->getDefinition(PermissionRegistry::class)
+            ->replaceArgument(0, $permissions)
+            ->setArgument(2, $public);
     }
 
     /**

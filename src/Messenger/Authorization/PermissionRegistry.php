@@ -15,11 +15,21 @@ final readonly class PermissionRegistry
     /**
      * @param array<class-string, string>          $permissions message class => permission
      * @param iterable<PermissionProviderInterface> $providers
+     * @param list<class-string>                    $public      messages open to anyone (#[PublicAccess])
      */
     public function __construct(
         private array $permissions,
         private iterable $providers = [],
+        private array $public = [],
     ) {}
+
+    /**
+     * @param class-string $messageClass
+     */
+    public function isPublic(string $messageClass): bool
+    {
+        return in_array($messageClass, $this->public, true);
+    }
 
     /**
      * @param class-string $messageClass

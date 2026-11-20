@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AlexandreBulete\DddSymfonyBundle\Messenger\Authorization;
 
 use AlexandreBulete\DddFoundation\Application\Authorization\Permission;
+use AlexandreBulete\DddFoundation\Application\Authorization\PublicAccess;
 
 /**
  * The permission a use case requires (ADR 0008): the one it declares with
@@ -38,6 +39,16 @@ final class PermissionName
     public static function isDeclared(string $messageClass): bool
     {
         return (new \ReflectionClass($messageClass))->getAttributes(Permission::class) !== [];
+    }
+
+    /**
+     * Open to anyone (#[PublicAccess]): no permission at all.
+     *
+     * @param class-string $messageClass
+     */
+    public static function isPublic(string $messageClass): bool
+    {
+        return (new \ReflectionClass($messageClass))->getAttributes(PublicAccess::class) !== [];
     }
 
     private static function derive(string $messageClass): ?string
