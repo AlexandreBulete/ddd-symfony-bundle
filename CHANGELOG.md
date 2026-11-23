@@ -1,3 +1,12 @@
+## [1.6.0] - 2026-11-20
+
+### 🚀 Features
+
+- Public use cases, open to any actor
+
+### 📚 Documentation
+
+- Update CHANGELOG.md for 1.5.0
 ## [1.5.0] - 2026-09-29
 
 ### 🚀 Features
