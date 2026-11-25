@@ -1,25 +1,22 @@
+{# A Markdown field: a plain textarea, turned into a WYSIWYG editor by
+   markdown-editor.js once it has loaded. Until then — or if the script
+   cannot run — the textarea stays usable. #}
 {% block ddd_symfony_markdown_row %}
 	<div class="mb-3 field">
 		{{ form_label(form) }}
 
-		<div data-controller="alexandrebulete--ddd-symfony-bundle--markdown">
-            
-            <div 
-                data-alexandrebulete--ddd-symfony-bundle--markdown-target="editor"
-                class="form-control"
-            ></div>
-			
-            {{ form_widget(form, {
-                'attr': {
-                    'data-alexandrebulete--ddd-symfony-bundle--markdown-target': 'textarea',
-                    'class': 'd-none',
-                },
-                'required': form.vars.required,
-            }) }}
-
-		</div>
+		{{ form_widget(form, {
+			'attr': (attr|default({}))|merge({
+				'data-ddd-markdown': '',
+				'data-ddd-markdown-locale': app.request.locale|default('en'),
+				'rows': attr.rows|default(14),
+			}),
+		}) }}
 
 		{{ form_help(form) }}
 		{{ form_errors(form) }}
 	</div>
+
+	<link rel="stylesheet" href="{{ asset('@alexandrebulete/ddd-symfony-bundle/markdown-editor.css') }}">
+	<script type="module" src="{{ asset('@alexandrebulete/ddd-symfony-bundle/markdown-editor.js') }}"></script>
 {% endblock %}

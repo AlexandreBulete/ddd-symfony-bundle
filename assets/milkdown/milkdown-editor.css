@@ -1,5 +1,12 @@
-.milkdown .ProseMirror {
-    padding: 20px 80px;
+/* Inside a back-office form: the frame of a form control. */
+.ddd-markdown-editor .milkdown {
+    border: 1px solid var(--tblr-border-color, #dee2e6);
+    border-radius: var(--tblr-border-radius, 6px);
+    min-height: 18rem;
+}
+
+.ddd-markdown-editor .milkdown .ProseMirror {
+    padding: 18px 64px;
 }
 
 .milkdown .milkdown-table-block .cell-handle .button-group button {

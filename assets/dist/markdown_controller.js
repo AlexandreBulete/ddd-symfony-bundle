@@ -1,41 +1,17 @@
 import { Controller } from "@hotwired/stimulus";
+import { enhance } from "./markdown-editor.js";
 
-// TODO: finalize implementation, tests, and documentation
+/**
+ * Kept for applications that registered it: the editor now starts by itself
+ * on any textarea[data-ddd-markdown] (see markdown-editor.js), Stimulus or
+ * not. This controller only enhances its textarea target, once.
+ */
 export default class extends Controller {
-    static targets = ["editor", "textarea"];
+    static targets = ["textarea"];
 
-    async connect() {
-        if (!this.editorTarget.id) {
-            this.editorTarget.id = `milkdown-${(crypto.randomUUID?.() ?? Math.random().toString(16).slice(2))}`;
+    connect() {
+        if (this.hasTextareaTarget) {
+            enhance(this.textareaTarget);
         }
-
-        const rootSelector = `#${this.editorTarget.id}`;
-        const defaultValue = this.textareaTarget.value ?? "";
-
-        try {
-            const mod = await import("/build/milkdown-editor.js");
-            this.editor = await mod.createCrepe({
-                rootSelector,
-                defaultValue,
-            });
-
-            await this.editor.create();
-
-            this.editor.on((listener) => {
-                listener.markdownUpdated((ctx, markdown) => {
-                    this.textareaTarget.value = markdown ?? "";
-                    this.textareaTarget.dispatchEvent(new Event("input", { bubbles: true }));
-                    this.textareaTarget.dispatchEvent(new Event("change", { bubbles: true }));
-                });
-            });
-
-        } catch (e) {
-            console.error("[Milkdown] failed to load/create", e);
-        }
-    }
-
-    disconnect() {
-        this.crepe?.destroy?.();
-        this.crepe = null;
     }
 }

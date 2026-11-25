@@ -210,6 +210,34 @@ The autocomplete endpoint must return:
 | initial_text | Preselected label (edit forms) |
 <!-- | multiple | Whether the field is multiple | -->
 
+### Markdown Form Field
+
+`MarkdownType` stores Markdown and edits it in a WYSIWYG editor
+([Milkdown Crepe](https://milkdown.dev)): headings, quotes, lists, tables,
+bold, italic, links. Type `/` at the start of a line for the block menu, select
+text for the formatting toolbar.
+
+```php
+use AlexandreBulete\DddSymfonyBundle\Form\Type\MarkdownType;
+
+$builder->add('body', MarkdownType::class, ['required' => false]);
+```
+
+Nothing to set up beyond AssetMapper: the field links
+`@alexandrebulete/ddd-symfony-bundle/markdown-editor.{js,css}`, a prebuilt
+bundle that starts by itself on every `textarea[data-ddd-markdown]` — no
+Stimulus controller to register, no Node build in the application.
+
+- The textarea stays visible until the editor is up: a script that fails to
+  load leaves a plain Markdown field, never an empty form.
+- Labels follow the request locale (French and English, English otherwise).
+- No pictures in the text (a pasted file is ignored, not inlined as base64),
+  no formulas, no code editor: pictures belong to a media library.
+
+The editor is rebuilt from `assets/milkdown/` with
+`npm install && npm run build:milkdown` (in a Node container), and the output
+in `assets/dist/` is committed.
+
 ## Tracing: who acts, and what caused what
 
 Every message on `command.bus` and `query.bus` carries two stamps, set when it

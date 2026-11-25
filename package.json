@@ -1,11 +1,12 @@
 {
-    "dependencies": {
-        "@milkdown/crepe": "^7.17.3"
+    "private": true,
+    "description": "Builds assets/dist/markdown-editor.{js,css} (Milkdown Crepe), committed: applications need no Node build.",
+    "scripts": {
+        "build:milkdown": "esbuild assets/milkdown/milkdown-editor.entry.js --bundle --format=esm --minify --legal-comments=linked --outdir=assets/dist --entry-names=markdown-editor --loader:.svg=dataurl"
     },
     "devDependencies": {
-        "esbuild": "^0.27.2"
-    },
-    "scripts": {
-        "build:milkdown": "esbuild assets/milkdown/editor.entry.js --bundle --format=esm --splitting=false --outdir=public/build/milkdown --entry-names=milkdown-editor --asset-names=milkdown-[name] --loader:.css=css --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.eot=file --loader:.svg=file"
+        "@milkdown/crepe": "^7.23.0",
+        "@milkdown/kit": "^7.23.0",
+        "esbuild": "^0.25.12"
     }
 }
